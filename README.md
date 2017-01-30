@@ -1,4 +1,4 @@
 # Vanderbilt Assistant
-![Logo](VAFinal.jpg?raw=true)
+![Logo](VAfinal.jpg)
 
 *Temporary README placeholder*
