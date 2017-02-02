@@ -1,1 +1,2 @@
-GetHoursIntent what are the hours for {Restaurant}
+GetHoursIntent what are the hours for {Restaurant} on {Date}
+GetHoursIntent what are the hours for {Restaurant} {Date}

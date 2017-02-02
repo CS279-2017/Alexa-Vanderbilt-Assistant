@@ -22,6 +22,8 @@
 var AlexaSkill = require('./AlexaSkill'),
     restaurants = require('./restaurants');
 
+var data = require('./data')
+
 var APP_ID = 'amzn1.ask.skill.f10cb500-8fd5-4fbb-9e19-cee9b1427b51'; //OPTIONAL: replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
 
 /**
@@ -30,6 +32,14 @@ var APP_ID = 'amzn1.ask.skill.f10cb500-8fd5-4fbb-9e19-cee9b1427b51'; //OPTIONAL:
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript#Inheritance
  */
+
+ 
+//
+
+
+
+
+
 var HowTo = function () {
     AlexaSkill.call(this, APP_ID);
 };
@@ -54,13 +64,24 @@ HowTo.prototype.intentHandlers = {
             restaurantName = restaurantSlot.value.toLowerCase();
         }
 
+        var dateSlot = intent.slots.Date;
+        var dateName = dateSlot.value.toLowerCase();
+
+        var currentDate = new Date(dateName);
+        var currentDay = currentDate.getDay();
+        
+        var currentDate = new Date(dateName);
+        
+        var hoursForRestaurant = data['rand'][currentDay.toString()];
+
+
         var cardTitle = "Hours for " + restaurantName,
-            restaurant = restaurants[restaurantName],
+            restaurant = restaurantName,
             speechOutput,
             repromptOutput;
         if (restaurant) {
             speechOutput = {
-                speech: restaurant,
+                speech: hoursForRestaurant,
                 type: AlexaSkill.speechOutputType.PLAIN_TEXT
             };
             response.tellWithCard(speechOutput, cardTitle, restaurant);
