@@ -6,7 +6,7 @@
 */
 
 module.exports = {
-	"rand" : "7:00 - 3:00",
-	"pub" : "11:00 - 9:00"
+	"rand" : "Rand is open from seven am to three pm",
+	"pub" : "The pub is open from eleven am to nine pm"
 
 };

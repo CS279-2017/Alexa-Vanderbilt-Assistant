@@ -1,4 +1,4 @@
-utable File  117 lines (100 sloc)  4.35 KB
+
 /**
     Copyright 2014-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
     Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
@@ -20,9 +20,9 @@ utable File  117 lines (100 sloc)  4.35 KB
 'use strict';
 
 var AlexaSkill = require('./AlexaSkill'),
-    recipes = require('./restaurants');
+    restaurants = require('./restaurants');
 
-var APP_ID = undefined; //OPTIONAL: replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
+var APP_ID = 'amzn1.ask.skill.f10cb500-8fd5-4fbb-9e19-cee9b1427b51'; //OPTIONAL: replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
 
 /**
  * Vanderbilt is a child of AlexaSkill.
@@ -39,7 +39,7 @@ HowTo.prototype = Object.create(AlexaSkill.prototype);
 HowTo.prototype.constructor = HowTo;
 
 HowTo.prototype.eventHandlers.onLaunch = function (launchRequest, session, response) {
-    var speechText = "Welcome to the How To Helper. You can ask a question like, what's the recipe for a chest? ... Now, what can I help you with.";
+    var speechText = "Welcome to the How To Helper. You can ask a question like, what's the hours are for rand ... Now, what can I help you with.";
     // If the user either does not reply to the welcome message or says something that is not
     // understood, they will be prompted again with this text.
     var repromptText = "For instructions on what you can say, please say help me.";
@@ -47,7 +47,7 @@ HowTo.prototype.eventHandlers.onLaunch = function (launchRequest, session, respo
 };
 
 HowTo.prototype.intentHandlers = {
-    "RecipeIntent": function (intent, session, response) {
+    "GetHoursIntent": function (intent, session, response) {
         var restaurantSlot = intent.slots.Restaurant,
             restaurantName;
         if (restaurantSlot && restaurantSlot.value){
@@ -55,7 +55,7 @@ HowTo.prototype.intentHandlers = {
         }
 
         var cardTitle = "Hours for " + restaurantName,
-            restaurant = recipes[restaurantName],
+            restaurant = restaurants[restaurantName],
             speechOutput,
             repromptOutput;
         if (restaurant) {
@@ -63,13 +63,13 @@ HowTo.prototype.intentHandlers = {
                 speech: restaurant,
                 type: AlexaSkill.speechOutputType.PLAIN_TEXT
             };
-            response.tellWithCard(speechOutput, cardTitle, recipe);
+            response.tellWithCard(speechOutput, cardTitle, restaurant);
         } else {
             var speech;
             if (restaurantName) {
-                speech = "I'm sorry, I currently do not know the recipe for " + itemName + ". What else can I help with?";
+                speech = "I'm sorry, I currently do not know the hours for " + restaurant + ". What else can I help with?";
             } else {
-                speech = "I'm sorry, I currently do not know that recipe. What else can I help with?";
+                speech = "I'm sorry, I currently do not know that restaurant. What else can I help with?";
             }
             speechOutput = {
                 speech: speech,
@@ -95,7 +95,7 @@ HowTo.prototype.intentHandlers = {
 
     "AMAZON.HelpIntent": function (intent, session, response) {
         var speechText = "You can ask what are the hours of rand or, you can say exit... Now, what can I help you with?";
-        var repromptText = "You can ask what are the hours of rand, or you can say exit... Now, what can I help you with?";
+        var repromptText = "You can ask what are the hours of rand or, you can say exit... Now, what can I help you with?";
         var speechOutput = {
             speech: speechText,
             type: AlexaSkill.speechOutputType.PLAIN_TEXT
