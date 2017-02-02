@@ -1,0 +1,26 @@
+{
+  "intents": [
+    {
+      "intent": "GetHoursIntent",
+      "slots": [
+      {
+        "name" : "Restaurant",
+        "type": "LIST_OF_RESTAURANTS"
+      },
+      {
+        "name" : "Date",
+        "type" : "AMAZON.Date"
+      }
+     ]
+    },
+   {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    }
+  ]
+}
