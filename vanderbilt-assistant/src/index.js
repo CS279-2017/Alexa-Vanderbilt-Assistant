@@ -68,11 +68,8 @@ HowTo.prototype.intentHandlers = {
         var dateName = dateSlot.value.toLowerCase();
 
         var currentDate = new Date(dateName);
-        var currentDay = currentDate.getDay();
-        
-        var currentDate = new Date(dateName);
-        
-        var hoursForRestaurant = data['rand'][currentDay.toString()];
+        var currentDay = currentDate.getDay();        
+        var hoursForRestaurant = data[restaurantName][currentDay.toString()];
 
 
         var cardTitle = "Hours for " + restaurantName,
