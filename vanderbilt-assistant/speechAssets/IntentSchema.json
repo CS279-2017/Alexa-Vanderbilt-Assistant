@@ -13,7 +13,33 @@
       }
      ]
     },
-   {
+    {
+     "intent":"GetTimesOfGamesIntent",
+     "slots" : [
+      {
+        "name": "Duration",
+        "type": "AMAZON.Duration"
+      },
+      {
+        "name": "Sport",
+        "type": "VANDERBILT_SPORTS"
+      }
+     ]
+    },
+    {
+    "intent":"GetResultsOfGamesIntent",
+     "slots" : [
+      {
+        "name": "Duration",
+        "type": "AMAZON.Duration"
+      },
+      {
+        "name": "Sport",
+        "type": "VANDERBILT_SPORTS"
+      }
+     ]
+    },
+    {
       "intent": "AMAZON.HelpIntent"
     },
     {

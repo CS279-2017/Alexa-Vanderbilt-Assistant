@@ -19,11 +19,10 @@
 
 'use strict';
 
-var AlexaSkill = require('./AlexaSkill'),
-    restaurants = require('./restaurants');
-
-var data = require('./data')
-
+var AlexaSkill = require('./AlexaSkill');
+var fs = require('fs')
+var moment = require('moment')
+var data = require('./data/restaurants')
 var APP_ID = 'amzn1.ask.skill.f10cb500-8fd5-4fbb-9e19-cee9b1427b51'; //OPTIONAL: replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
 
 /**
@@ -37,8 +36,16 @@ var APP_ID = 'amzn1.ask.skill.f10cb500-8fd5-4fbb-9e19-cee9b1427b51'; //OPTIONAL:
 //
 
 
+function speakEvent(event){
+    return "On " + event['date'] + " Vanderbilt plays " + event['opponent'] + 
+    " in " + event['location'] + " at " + event['time'] + ".";
+}
 
+function speakResult(event){
+    return "On " + event['date'] + " Vanderbilt played " + event['opponent'] + 
+    " in " + event['location'] + " and " + event['time'] + ".";
 
+}
 
 var HowTo = function () {
     AlexaSkill.call(this, APP_ID);
@@ -100,6 +107,108 @@ HowTo.prototype.intentHandlers = {
             response.ask(speechOutput, repromptOutput);
         }
     },
+
+    "GetTimesOfGamesIntent": function (intent, session, response){
+        //Handles getting the file
+        var sportSlot = intent.slots.Sport;
+        var sportValue = sportSlot.value;
+        //Removes punctuation and set to lowercase
+        sportValue = sportValue.replace(/'/,'');
+        sportValue = sportValue.toLowerCase();
+        
+        var filename = './data/' + sportValue + '.js';
+        var schedule = JSON.parse(fs.readFileSync(filename, 'utf8'));
+
+        //Get next game
+        if(!intent.slots.Duration.value){
+            var currentDate = moment.now();
+            for(var i = 0; i < schedule.length; i++){
+                var date = new Date(schedule[i].date);
+                if(date >= currentDate){
+                    response.tell(speakEvent(schedule[i]))
+                    return;
+                }
+            }
+        }
+
+        
+        //Using durations
+        var durationSlot = intent.slots.Duration;
+        var durationValue = durationSlot.value;
+        var currentTime = moment.now();
+        //Begin getting getting events
+        var currentDate = moment(currentTime);
+        var currentDateAfterRange = moment(currentTime + moment.duration(durationValue));
+        var eventsWithinTheRange = [];
+
+        for(var i = 0; i < schedule.length; i++){
+            var date = new Date(schedule[i].date);
+            if((date >= currentDate) && (date <= currentDateAfterRange)){
+                eventsWithinTheRange.push(schedule[i]);
+            }
+        }
+
+        var responseString = "";
+        for(var j = 0; j < eventsWithinTheRange.length; j++){
+            responseString = responseString + speakEvent(eventsWithinTheRange[j]) + " ";
+        }
+
+        response.tell(responseString);
+        
+        
+    },
+    "GetResultsOfGamesIntent": function (intent, session, response){
+        //Handles getting the file
+        var sportSlot = intent.slots.Sport;
+        var sportValue = sportSlot.value;
+        //Removes punctuation 
+        sportValue = sportValue.replace(/'/,'');
+        sportValue = sportValue.toLowerCase();
+        
+        var filename = './data/' + sportValue + '.js';
+        var schedule = JSON.parse(fs.readFileSync(filename, 'utf8'));
+
+
+
+        //Get last result 
+        if(!intent.slots.Duration.value){
+            var currentDate = moment.now();
+            for(var i = schedule.length-1; i >= 0; i--){
+                if(schedule[i]['time'].includes("L") ||
+                   schedule[i]['time'].includes("W")){
+                    response.tell(speakEvent(schedule[i]))
+                    return;
+                }
+            }
+        }
+
+        //Using durations
+        var durationSlot = intent.slots.Duration;
+        var durationValue = durationSlot.value;
+        var currentTime = moment.now();
+        //Begin getting getting events
+        var currentDate = moment(currentTime);
+        var currentDateBeforeRange = moment(currentTime - moment.duration(durationValue));
+        var eventsWithinTheRange = [];
+
+        for(var i = 0; i < schedule.length; i++){
+            var date = new Date(schedule[i].date);
+            if((date <= currentDate) && (date >= currentDateBeforeRange)){
+                eventsWithinTheRange.push(schedule[i]);
+            }
+        }
+
+        var responseString = "";
+        for(var j = 0; j < eventsWithinTheRange.length; j++){
+            responseString = responseString + speakResult(eventsWithinTheRange[j]) + " ";
+        }
+
+        response.tell(responseString);
+        
+    },
+
+
+
 
     "AMAZON.StopIntent": function (intent, session, response) {
         var speechOutput = "Goodbye";

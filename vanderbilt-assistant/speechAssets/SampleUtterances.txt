@@ -1,2 +1,9 @@
 GetHoursIntent what are the hours for {Restaurant} on {Date}
 GetHoursIntent what are the hours for {Restaurant} {Date}
+
+
+GetTimesOfGamesIntent what are the {Sport} games in the next {Duration}
+GetTimesOfGamesIntent when is the next {Sport} game
+
+GetResultsOfGamesIntent	what are the results of {Sport} in the last {Duration}
+GetResultsOfGamesIntent	what is the last result of {Sport}
