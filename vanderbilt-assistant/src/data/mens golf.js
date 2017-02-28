@@ -93,7 +93,7 @@
         "date": "02/26/17",
         "opponent": "Querencia Cabo Intercollegiate",
         "location": "Los Cabos, Mexico",
-        "time": "All Day"
+        "time": "13th/15"
     },
     {
         "date": "02/27/17",

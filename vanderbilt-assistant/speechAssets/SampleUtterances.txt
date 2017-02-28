@@ -1,9 +1,38 @@
 GetHoursIntent what are the hours for {Restaurant} on {Date}
 GetHoursIntent what are the hours for {Restaurant} {Date}
+GetHoursIntent when is {Restaurant} open
+GetHoursIntent when is {Restaurant} open {Date}
+GetHoursIntent is {Restaurant} open
+GetHoursIntent is {Restaurant} open {Date}
+
+GetHoursIntent is {Restaurant} closed
+GetHoursIntent is {Restaurant} closed {Date}
+
+GetHoursIntent when does {Restaurant} open
+GetHoursIntent when does {Restaurant} close
+GetHoursIntent when does {Restaurant} open {Date}
+GetHoursIntent when does {Restaurant} close {Date}
+
+GetHoursIntent can I go to {Restaurant} {Date}
+GetHoursIntent can I go to {Restaurant} 
+
+GetHoursIntent can we go to {Restaurant}
+GetHoursIntent can we go to {Restaurant} {Date}
+
+
 
 
 GetTimesOfGamesIntent what are the {Sport} games in the next {Duration}
 GetTimesOfGamesIntent when is the next {Sport} game
+GetTimesOfGamesIntent when is the next {Sport} match
+GetTimesOfGamesIntent when is the next {Sport} contest
+GetTimesOfGamesIntent when is the next {Sport} meet
+GetTimesOfGamesIntent when does {Sport} play 
+GetTimesOfGamesIntent when does {Sport} play next
+
 
 GetResultsOfGamesIntent	what are the results of {Sport} in the last {Duration}
 GetResultsOfGamesIntent	what is the last result of {Sport}
+GetResultsOfGamesIntent how is the {Sport} team doing
+GetResultsOfGamesIntent how is {Sport} team doing 
+GetResultsOfGamesIntent how {Sport} is doing

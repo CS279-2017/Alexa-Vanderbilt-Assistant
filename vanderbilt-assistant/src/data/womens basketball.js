@@ -183,6 +183,6 @@
         "date": "02/26/17",
         "opponent": " LSU ",
         "location": "Baton Rouge, La.",
-        "time": "12:00 p.m. CT"
+        "time": "L, 64-58"
     }
 ]

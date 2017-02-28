@@ -99,13 +99,13 @@
         "date": "02/25/17",
         "opponent": " Saint Mary's",
         "location": "Moraga, Calif.",
-        "time": "12:00 p.m. CT"
+        "time": "W, 6-1"
     },
     {
         "date": "02/26/17",
         "opponent": " Stanford",
         "location": "Palo Alto, Calif.",
-        "time": "2:00 p.m. CT"
+        "time": "L, 4-3"
     },
     {
         "date": "03/03/17",

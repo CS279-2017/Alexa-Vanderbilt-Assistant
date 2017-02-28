@@ -71,12 +71,16 @@ HowTo.prototype.intentHandlers = {
             restaurantName = restaurantSlot.value.toLowerCase();
         }
 
-        var dateSlot = intent.slots.Date;
-        var dateName = dateSlot.value.toLowerCase();
+        var dateName;
+        if(!intent.slots.Date.value){
+            dateName = new Date();
+        } else {
+            dateName = intent.slots.Date.value;
+            dateName = dateName.toLowerCase();
+        }
 
-        var currentDate = new Date(dateName);
-        var currentDay = currentDate.getDay();        
-        var hoursForRestaurant = data[restaurantName][currentDay.toString()];
+        var currentDate = new Date(dateName);       
+        var hoursForRestaurant = data[restaurantName][currentDate.getDay().toString()];
 
 
         var cardTitle = "Hours for " + restaurantName,
@@ -176,7 +180,7 @@ HowTo.prototype.intentHandlers = {
             for(var i = schedule.length-1; i >= 0; i--){
                 if(schedule[i]['time'].includes("L") ||
                    schedule[i]['time'].includes("W")){
-                    response.tell(speakEvent(schedule[i]))
+                    response.tell(speakResult(schedule[i]))
                     return;
                 }
             }

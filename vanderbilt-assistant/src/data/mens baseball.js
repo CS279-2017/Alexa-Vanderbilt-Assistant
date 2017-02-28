@@ -39,7 +39,7 @@
         "date": "02/26/17",
         "opponent": " UIC",
         "location": "Nashville, Tenn.",
-        "time": "1:00 p.m. CT"
+        "time": "L, 5-2 (11)"
     },
     {
         "date": "02/28/17",

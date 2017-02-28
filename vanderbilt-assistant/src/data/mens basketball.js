@@ -171,7 +171,7 @@
         "date": "02/25/17",
         "opponent": " Mississippi State ",
         "location": "Nashville, Tenn.",
-        "time": "3:00 p.m. CT"
+        "time": "W, 77-48"
     },
     {
         "date": "02/28/17",

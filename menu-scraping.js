@@ -25,7 +25,7 @@ function testRequest() {
 		});
 }
 
-//testRequest();
+testRequest();
 
 
 //https://campusdining.vanderbilt.edu/vu-meal-plans/special-events/
