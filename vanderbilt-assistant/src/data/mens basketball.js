@@ -177,7 +177,7 @@
         "date": "02/28/17",
         "opponent": " Kentucky ",
         "location": "Lexington, Ky.",
-        "time": "8:00 p.m. CT"
+        "time": "L, 73-67"
     },
     {
         "date": "03/04/17",

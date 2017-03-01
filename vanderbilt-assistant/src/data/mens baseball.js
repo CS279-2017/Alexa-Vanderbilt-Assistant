@@ -45,7 +45,7 @@
         "date": "02/28/17",
         "opponent": " Southeastern Louisiana",
         "location": "Nashville, Tenn.",
-        "time": "4:00 p.m. CT"
+        "time": "W, 9-6"
     },
     {
         "date": "03/01/17",

@@ -21,7 +21,7 @@
 
 var AlexaSkill = require('./AlexaSkill');
 var fs = require('fs')
-var moment = require('moment')
+var moment = require('moment-timezone')
 var data = require('./data/restaurants')
 var APP_ID = 'amzn1.ask.skill.f10cb500-8fd5-4fbb-9e19-cee9b1427b51'; //OPTIONAL: replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
 
@@ -44,12 +44,32 @@ function speakEvent(event){
 function speakResult(event){
     return "On " + event['date'] + " Vanderbilt played " + event['opponent'] + 
     " in " + event['location'] + " and " + event['time'] + ".";
-
 }
+
+
+
+function giveResponseEvent(eventsWithinTheRange){
+    var responseString = "";
+    for(var j = 0; j < eventsWithinTheRange.length; j++){
+            responseString = responseString + speakEvent(eventsWithinTheRange[j]) + " ";
+    }
+    return responseString;
+}
+
+function giveResponseResult(eventsWithinTheRange){
+    var responseString = "";
+    for(var j = 0; j < eventsWithinTheRange.length; j++){
+            responseString = responseString + speakResult(eventsWithinTheRange[j]) + " ";
+    }
+    return responseString;
+}
+
+
 
 var HowTo = function () {
     AlexaSkill.call(this, APP_ID);
 };
+
 
 // Extend AlexaSkill
 HowTo.prototype = Object.create(AlexaSkill.prototype);
@@ -128,7 +148,9 @@ HowTo.prototype.intentHandlers = {
             var currentDate = moment.now();
             for(var i = 0; i < schedule.length; i++){
                 var date = new Date(schedule[i].date);
-                if(date >= currentDate){
+                if(schedule[i]['time'].includes("CT")  || 
+                   schedule[i]['time'].includes("All") ||
+                   schedule[i]['time'].includes("TBA")){
                     response.tell(speakEvent(schedule[i]))
                     return;
                 }
@@ -141,23 +163,25 @@ HowTo.prototype.intentHandlers = {
         var durationValue = durationSlot.value;
         var currentTime = moment.now();
         //Begin getting getting events
-        var currentDate = moment(currentTime);
-        var currentDateAfterRange = moment(currentTime + moment.duration(durationValue));
+        var currentDate = moment(currentTime).tz("America/Chicago");
+        var currentDateAfterRange = moment(currentDate + moment.duration(durationValue));
         var eventsWithinTheRange = [];
 
         for(var i = 0; i < schedule.length; i++){
-            var date = new Date(schedule[i].date);
-            if((date >= currentDate) && (date <= currentDateAfterRange)){
+            var date = moment(new Date(schedule[i].date));
+            var isFutureEvent = schedule[i]['time'].includes("CT")  || 
+                                schedule[i]['time'].includes("All") || 
+                                schedule[i]['time'].includes("TBA");
+            var inRange = (date  > currentDate && date < currentDateAfterRange) ||
+               (date.format("MM-DD-YYYY") == currentDate.format("MM-DD-YYYY")) ||
+               (date.format("MM-DD-YYYY") == currentDateAfterRange.format("MM-DD-YYYY"));
+
+            if(inRange && isFutureEvent) {
                 eventsWithinTheRange.push(schedule[i]);
             }
         }
 
-        var responseString = "";
-        for(var j = 0; j < eventsWithinTheRange.length; j++){
-            responseString = responseString + speakEvent(eventsWithinTheRange[j]) + " ";
-        }
-
-        response.tell(responseString);
+        response.tell(giveResponseEvent(eventsWithinTheRange));
         
         
     },
@@ -178,8 +202,11 @@ HowTo.prototype.intentHandlers = {
         if(!intent.slots.Duration.value){
             var currentDate = moment.now();
             for(var i = schedule.length-1; i >= 0; i--){
-                if(schedule[i]['time'].includes("L") ||
-                   schedule[i]['time'].includes("W")){
+                if(schedule[i]['time'].includes("L,") ||
+                   schedule[i]['time'].includes("W,") ||
+                   schedule[i]['time'].includes("T,") || 
+                   schedule[i]['time'].includes("st") ||
+                   schedule[i]['time'].includes("th")){
                     response.tell(speakResult(schedule[i]))
                     return;
                 }
@@ -191,23 +218,26 @@ HowTo.prototype.intentHandlers = {
         var durationValue = durationSlot.value;
         var currentTime = moment.now();
         //Begin getting getting events
-        var currentDate = moment(currentTime);
-        var currentDateBeforeRange = moment(currentTime - moment.duration(durationValue));
+        var currentDate = moment(currentTime).tz("America/Chicago");
+        var currentDateBeforeRange = moment(currentDate - moment.duration(durationValue));
         var eventsWithinTheRange = [];
 
         for(var i = 0; i < schedule.length; i++){
-            var date = new Date(schedule[i].date);
-            if((date <= currentDate) && (date >= currentDateBeforeRange)){
+            var date = moment(new Date(schedule[i].date));
+            var isPastResult = schedule[i]['time'].includes("L")  ||
+                               schedule[i]['time'].includes("W")  ||
+                               schedule[i]['time'].includes("T,") || 
+                               schedule[i]['time'].includes("st") ||
+                               schedule[i]['time'].includes("th");
+            var inRange = (currentDate > date && currentDateBeforeRange < date)   ||
+                 (date.format("MM-DD-YYYY") == currentDate.format("MM-DD-YYYY"))  ||
+                 (date.format("MM-DD-YYYY") == currentDateBeforeRange.format("MM-DD-YYYY"));
+            if(inRange && isPastResult){
                 eventsWithinTheRange.push(schedule[i]);
             }
         }
 
-        var responseString = "";
-        for(var j = 0; j < eventsWithinTheRange.length; j++){
-            responseString = responseString + speakResult(eventsWithinTheRange[j]) + " ";
-        }
-
-        response.tell(responseString);
+        response.tell(giveResponseResult(eventsWithinTheRange));
         
     },
 

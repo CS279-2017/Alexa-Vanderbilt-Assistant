@@ -6,7 +6,7 @@ var app     = express();
 
 app.get('/scrape', function(req, res){
 
-url = 'http://www.vucommodores.com/sports/w-tennis/sched/vand-w-tennis-sched.html';
+url = 'http://www.vucommodores.com/sports/m-basebl/sched/vand-m-basebl-sched.html';
 
 json = "{}"
 
@@ -70,7 +70,7 @@ request(url, function(error, response, html){
 // Parameter 2 :  JSON.stringify(json, null, 4) - the data to write, here we do an extra step by calling JSON.stringify to make our JSON easier to read
 // Parameter 3 :  callback function - a callback function to let us know the status of our function
 
-fs.writeFile('./data/womens tennis.js', JSON.stringify(eventArray, null, 4), function(err){
+fs.writeFile('./data/mens baseball.js', JSON.stringify(eventArray, null, 4), function(err){
 
     console.log('File successfully written! - Check your project directory for the output.json file');
 
