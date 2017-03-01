@@ -46,20 +46,10 @@ function speakResult(event){
     " in " + event['location'] + " and " + event['time'] + ".";
 }
 
-
-
-function giveResponseEvent(eventsWithinTheRange){
+function giveResponse(eventsWithinTheRange,speak){
     var responseString = "";
     for(var j = 0; j < eventsWithinTheRange.length; j++){
-            responseString = responseString + speakEvent(eventsWithinTheRange[j]) + " ";
-    }
-    return responseString;
-}
-
-function giveResponseResult(eventsWithinTheRange){
-    var responseString = "";
-    for(var j = 0; j < eventsWithinTheRange.length; j++){
-            responseString = responseString + speakResult(eventsWithinTheRange[j]) + " ";
+            responseString = responseString + speak(eventsWithinTheRange[j]) + " ";
     }
     return responseString;
 }
@@ -109,7 +99,7 @@ HowTo.prototype.intentHandlers = {
             repromptOutput;
         if (restaurant) {
             speechOutput = {
-                speech: hoursForRestaurant,
+                speech: restaurantName + " is open from " + hoursForRestaurant,
                 type: AlexaSkill.speechOutputType.PLAIN_TEXT
             };
             response.tellWithCard(speechOutput, cardTitle, restaurant);
@@ -173,7 +163,7 @@ HowTo.prototype.intentHandlers = {
                                 schedule[i]['time'].includes("All") || 
                                 schedule[i]['time'].includes("TBA");
             var inRange = (date  > currentDate && date < currentDateAfterRange) ||
-               (date.format("MM-DD-YYYY") == currentDate.format("MM-DD-YYYY")) ||
+               (date.format("MM-DD-YYYY") == currentDate.format("MM-DD-YYYY"))  ||
                (date.format("MM-DD-YYYY") == currentDateAfterRange.format("MM-DD-YYYY"));
 
             if(inRange && isFutureEvent) {
@@ -181,7 +171,7 @@ HowTo.prototype.intentHandlers = {
             }
         }
 
-        response.tell(giveResponseEvent(eventsWithinTheRange));
+        response.tell(giveResponse(eventsWithinTheRange,speakEvent));
         
         
     },
@@ -237,7 +227,7 @@ HowTo.prototype.intentHandlers = {
             }
         }
 
-        response.tell(giveResponseResult(eventsWithinTheRange));
+        response.tell(giveResponse(eventsWithinTheRange,speakResult));
         
     },
 

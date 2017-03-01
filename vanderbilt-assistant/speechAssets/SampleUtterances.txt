@@ -19,6 +19,15 @@ GetHoursIntent can I go to {Restaurant}
 GetHoursIntent can we go to {Restaurant}
 GetHoursIntent can we go to {Restaurant} {Date}
 
+GetHoursIntent when does {Restaurant} open {Date}
+GetHoursIntent when does {Restaurant} open on {Date}
+GetHoursIntent when does {Restaurant} close {Date}
+GetHoursIntent when does {Restaurant} close on {Date}
+GetHoursIntent what time does {Restaurant} open {Date}
+GetHoursIntent when time does {Restaurant} open on {Date}
+GetHoursIntent what time does {Restaurant} close {Date}
+GetHoursIntent when time does {Restaurant} close on {Date}
+
 
 
 
