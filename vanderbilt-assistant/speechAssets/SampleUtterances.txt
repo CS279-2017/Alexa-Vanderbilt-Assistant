@@ -44,3 +44,5 @@ GetResultsOfGamesIntent	what was the score of the last {Sport} game
 GetResultsOfGamesIntent how is the {Sport} team doing
 GetResultsOfGamesIntent how is {Sport} team doing 
 GetResultsOfGamesIntent how {Sport} is doing
+
+GetFoodSpecialsIntent what are the specials today

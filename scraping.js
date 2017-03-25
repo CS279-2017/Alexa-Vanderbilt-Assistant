@@ -14,16 +14,10 @@ request(url, function(error, response, html){
     if(!error){
         var $ = cheerio.load(html);
         var eventArray = [];
-
-
-
       	console.log("Did the url load")
 	    $('#schedtable').filter(function(){
 	        var data = $(this);
 	        events = data.children();
-
-
-
 	        for(var i = 0;  i < events.length; i++ ){
 	        	var game = {};
 	        	var elem = events[i];

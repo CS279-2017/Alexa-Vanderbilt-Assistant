@@ -7,34 +7,23 @@ var app     = express();
 app.get('/scrape', function(req, res){
 
 url = 'http://www.vucommodores.com/sports/m-basebl/sched/vand-m-basebl-sched.html';
-
 json = "{}"
-
 request(url, function(error, response, html){
     if(!error){
         var $ = cheerio.load(html);
         var eventArray = [];
-
-
-
       	console.log("Did the url load")
 	    $('#schedtable').filter(function(){
 	        var data = $(this);
 	        events = data.children();
-
-
-
 	        for(var i = 0;  i < events.length; i++ ){
 	        	var game = {};
 	        	var elem = events[i];
 	        	//Checks it is a game
 	        	if(elem['attribs']['class'] == 'event-listing'){
-
 	        		var elemChildren = elem.children
-
 	        		//Setting Date 
 	        		game['date'] = elemChildren[1].children[0]['data']
-
 	        		//Setting opponent
 	        		if(typeof(elemChildren[3].children[2]) == "undefined"){
 	        			game['opponent'] = elemChildren[3].children[0]['data']
@@ -43,8 +32,6 @@ request(url, function(error, response, html){
 	        		}
 	        		//Setting Location
 	        		game['location'] = elemChildren[5].children[0]['data']
-	        		
-
 	        		//Setting the time/result 
 	        		if(typeof(elemChildren[7].children[0]) == "undefined"){
 	        		   game['time'] = "TBA";
@@ -56,12 +43,7 @@ request(url, function(error, response, html){
 	        	}
 	        }
 	        console.log(eventArray);
-
-
-
 	    })
-
-    
 }
 
 // To write to the system we will use the built in 'fs' library.
@@ -71,9 +53,7 @@ request(url, function(error, response, html){
 // Parameter 3 :  callback function - a callback function to let us know the status of our function
 
 fs.writeFile('./data/mens baseball.js', JSON.stringify(eventArray, null, 4), function(err){
-
     console.log('File successfully written! - Check your project directory for the output.json file');
-
 })
 // Finally, we'll just send out a message to the browser reminding you that this app does not have a UI.
 	res.send('Check your console!')

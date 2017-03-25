@@ -40,6 +40,9 @@
      ]
     },
     {
+    "intent":"GetFoodSpecialsIntent"
+    },
+    {
       "intent": "AMAZON.HelpIntent"
     },
     {

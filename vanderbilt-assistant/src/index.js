@@ -20,9 +20,15 @@
 'use strict';
 
 var AlexaSkill = require('./AlexaSkill');
-var fs = require('fs')
+var fs = require('fs');
+//Configure AWS 
+var AWS = require('aws-sdk');
+AWS.config.loadFromPath('./config.json');
+// Create S3 service object
+var s3 = new AWS.S3({apiVersion: '2006-03-01'});
 var moment = require('moment-timezone')
 var data = require('./data/restaurants')
+var async = require('async')
 var APP_ID = 'amzn1.ask.skill.f10cb500-8fd5-4fbb-9e19-cee9b1427b51'; //OPTIONAL: replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
 
 /**
@@ -34,6 +40,9 @@ var APP_ID = 'amzn1.ask.skill.f10cb500-8fd5-4fbb-9e19-cee9b1427b51'; //OPTIONAL:
 
  
 //
+
+
+
 
 
 function speakEvent(event){
@@ -54,6 +63,45 @@ function giveResponse(eventsWithinTheRange,speak){
     return responseString;
 }
 
+function foodResponse(special){
+    var responseString = "The food today is: ";
+    for(var i = 0; i < special.length; i++){
+        if(special[i] == "Entrees:" || special[i] == "Sides:"){
+            continue;
+        }
+        responseString = responseString + special[i]+ " , ";
+    }
+    responseString = responseString + ".";
+    return responseString;
+}
+
+function checkCategory(event, categoryGiven){
+    var categories = event["categories"];
+
+    if(categories.length == 0  || categoryGiven == "none"){
+        return false;
+    } else{
+        for(var i = 0; i < categories.length; i++){
+            if(categories[i].toUpperCase() == categoryGiven.toUpperCase()){
+                return true;
+            }
+        }
+    }
+}
+
+function speakStudentEvent(event){
+
+    if(!event){
+        return "";
+    }
+
+    var responseString = event["title"] + " is on " + event["date"] + " at " + event["time"] + 
+    " at the location " + event["location"];
+
+    //Remove ampersands because SSML can't parse it 
+    return responseString.replace(/&/g, "and")
+}
+ 
 
 
 var HowTo = function () {
@@ -124,16 +172,36 @@ HowTo.prototype.intentHandlers = {
 
     "GetTimesOfGamesIntent": function (intent, session, response){
         //Handles getting the file
+        var schedule;
+        async.series([ 
+
+        function(callback){
         var sportSlot = intent.slots.Sport;
         var sportValue = sportSlot.value;
         //Removes punctuation and set to lowercase
         sportValue = sportValue.replace(/'/,'');
         sportValue = sportValue.toLowerCase();
         
-        var filename = './data/' + sportValue + '.js';
-        var schedule = JSON.parse(fs.readFileSync(filename, 'utf8'));
+        //Need to download file from S3
+        var awsFilename = '' + sportValue + '.js';
 
+        s3.getObject(
+        { Bucket: "vanderbilt-sports-schedules", Key: awsFilename },
+          function (error, data) {
+            if (error != null) {
+              console.log("Failed to retrieve an object: " + error);
+            } else {
+              console.log("Loaded " + data.ContentLength + " bytes");
+              schedule = JSON.parse(data.Body.toString());
+              callback();
+            }
+          }
+        );
+        },
+
+        function(callback){   
         //Get next game
+        console.log("Processing the schedule.")
         if(!intent.slots.Duration.value){
             var currentDate = moment.now();
             for(var i = 0; i < schedule.length; i++){
@@ -147,8 +215,7 @@ HowTo.prototype.intentHandlers = {
             }
         }
 
-        
-        //Using durations
+        //Using durations        
         var durationSlot = intent.slots.Duration;
         var durationValue = durationSlot.value;
         var currentTime = moment.now();
@@ -172,22 +239,39 @@ HowTo.prototype.intentHandlers = {
         }
 
         response.tell(giveResponse(eventsWithinTheRange,speakEvent));
-        
-        
+        callback();
+        }
+        ]);        
     },
     "GetResultsOfGamesIntent": function (intent, session, response){
         //Handles getting the file
+
+        var schedule;
+        async.series([
+
+        function(callback){
         var sportSlot = intent.slots.Sport;
         var sportValue = sportSlot.value;
         //Removes punctuation 
         sportValue = sportValue.replace(/'/,'');
         sportValue = sportValue.toLowerCase();
         
-        var filename = './data/' + sportValue + '.js';
-        var schedule = JSON.parse(fs.readFileSync(filename, 'utf8'));
+        var awsFilename = '' + sportValue + '.js';
+        s3.getObject(
+        { Bucket: "vanderbilt-sports-schedules", Key: awsFilename },
+          function (error, data) {
+            if (error != null) {
+              console.log("Failed to retrieve an object: " + error);
+            } else {
+              console.log("Loaded " + data.ContentLength + " bytes");
+              schedule = JSON.parse(data.Body.toString());
+              callback();
+            }
+          }
+        );
+        },
 
-
-
+        function(callback){
         //Get last result 
         if(!intent.slots.Duration.value){
             var currentDate = moment.now();
@@ -202,7 +286,6 @@ HowTo.prototype.intentHandlers = {
                 }
             }
         }
-
         //Using durations
         var durationSlot = intent.slots.Duration;
         var durationValue = durationSlot.value;
@@ -226,13 +309,103 @@ HowTo.prototype.intentHandlers = {
                 eventsWithinTheRange.push(schedule[i]);
             }
         }
-
         response.tell(giveResponse(eventsWithinTheRange,speakResult));
+        callback();
+        }
+        ])
         
     },
 
+    "GetFoodSpecialsIntent": function (intent, session, response){
+        var awsFilename = '' + "chef-james-special" + '.js';
+        var special;
+        s3.getObject(
+        { Bucket: "vanderbilt-specials", Key: awsFilename },
+          function (error, data) {
+            if (error != null) {
+              console.log("Failed to retrieve an object: " + error);
+            } else {
+              console.log("Loaded " + data.ContentLength + " bytes");
+              special = JSON.parse(data.Body.toString());
+              var responseString = foodResponse(special);
+              response.tell(responseString);  
+            }
+          }
+        );
+     },
 
+     "GetEventsIntent" : function(intent, session, response){
+        var vanderbiltEventsArray;
+        async.series([
+        function(callback){
+            var awsFilename = '' + "vanderbilt-events" + '.js';
+            s3.getObject(
+            { Bucket: "vanderbilt-events", Key: awsFilename },
+              function (error, data) {
+                if (error != null) {
+                  console.log("Failed to retrieve an object: " + error);
+                } else {
+                  console.log("Loaded " + data.ContentLength + " bytes");
+                  vanderbiltEventsArray = JSON.parse(data.Body.toString());
+                  callback();
+                }
+              }
+            );
+        },
 
+        function(callback){
+            //Get Duration
+            var durationSlot = intent.slots.Duration;
+            var durationValue = durationSlot.value;
+            //get category  
+            var categorySlot = intent.slots.Category;
+            var categoryValue = "none";
+            if(categorySlot.value){
+                categoryValue =  "" + String(categorySlot.value);
+            }
+            console.log(categoryValue);
+            var currentTime = moment.now();
+            //Begin getting getting events
+            var currentDate = moment(currentTime).tz("America/Chicago");
+            var currentDateAfterRange = moment(currentDate + moment.duration(durationValue));
+            var eventsWithinTheRange = [];
+            //Loop through the event 
+            for(var i = 0; i < vanderbiltEventsArray.length; i++){
+                //Check if the event has a date property
+                if(vanderbiltEventsArray[i]['date']){
+                    var date = moment(new Date(vanderbiltEventsArray[i]['date']));
+                    //If within the range of the dates, then add the events to array
+                    var inRange = (date  > currentDate && date < currentDateAfterRange) ||
+                                  (date.format("YYYY-MM-DD") == currentDate.format("YYYY-MM-DD"))  ||
+                                  (date.format("YYYY-MM-DD") == currentDateAfterRange.format("YYYY-MM-DD"));
+
+                    var isCategoryValid = checkCategory(vanderbiltEventsArray[i],categoryValue);
+                    //If there is no category value and it is in range, push it on
+                    if(categoryValue == "none" && inRange){
+                        eventsWithinTheRange.push(vanderbiltEventsArray[i]);
+                    }
+                    //If there is a category value, then it has to be the same as one 
+                    // of the categories in the set, and be in range 
+                    if(!(categoryValue == "none") && isCategoryValid && inRange){
+                        eventsWithinTheRange.push(vanderbiltEventsArray[i]);
+                    }
+                }
+            }
+            console.log(eventsWithinTheRange.length);
+            console.log(eventsWithinTheRange);
+
+            var responseString = "";
+            for(var p = 0; p < eventsWithinTheRange.length; p++){
+                responseString = responseString + speakStudentEvent(eventsWithinTheRange[p]) + " . ";
+            }
+
+            response.tell(responseString);
+            callback();
+
+        }
+
+        ])
+     },
 
     "AMAZON.StopIntent": function (intent, session, response) {
         var speechOutput = "Goodbye";

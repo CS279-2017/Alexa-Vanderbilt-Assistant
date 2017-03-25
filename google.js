@@ -1,7 +1,7 @@
 var Horseman = require('node-horseman');
-var async = require("async");
+var async   = require("async");
 var express = require('express');
-var fs = require('fs');
+var fs      = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
 var app     = express();
@@ -25,15 +25,11 @@ async.series([
     },
     function(callback){ 
     	console.log("done:");
-    	//console.log(htmlstring);
     	callback();
     },
     function(callback){
-        
     	var $ = cheerio.load(htmlstring);
     	//console.log($)
-
-
         $('#menu_area').filter(function(){
             var data = $(this);
             var menu_blocks = data.children()[0];
@@ -41,7 +37,6 @@ async.series([
             //First child 
             //console.log(blocksArray[0]['children'][0]['children'][0]['data']);
             //Get Chef James
-
             var meal = [];
             for(var i = 0; i < blocksArray.length; i++){
                 //console.log(blocksArray[i]['children'][0]['children'][0]['data']);
@@ -54,6 +49,15 @@ async.series([
                 }
             }
             console.log(meal);
+            //Write to file
+            fs.writeFile('./chef-james-special.js',
+            JSON.stringify(meal),
+            function (err) {
+                if (err) {
+                    console.error('Writing to file failed');
+                }
+            }
+            );
         })
     	callback();
     }
