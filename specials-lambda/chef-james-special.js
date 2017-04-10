@@ -1,1 +1,1 @@
-["Entrees:","Cajun Chicken & Andouille Penne","Blackened Tiapia w/ Crayfish Cream Sauce","Sides:","Red Beans","Stewed Tomatoes w/ Sweet Corn & Roasted Poblano","Steamed Carrots","White Rice"]
+["Entrees:","Shepherd's Pie","Rainbow Trout w/ Lemon Thyme Brown Butter","Sides:","Green Bean Casserole","Roasted Carrots w/ Fennel","Roasted Red Potatoes","Steamed Cauliflower","White Rice"]

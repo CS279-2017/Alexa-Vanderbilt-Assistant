@@ -90,21 +90,23 @@ function checkCategory(event, categoryGiven){
 }
 
 function speakStudentEvent(event){
-
     if(!event){
         return "";
     }
-
     var responseString = event["title"] + " is on " + event["date"] + " at " + event["time"] + 
     " at the location " + event["location"];
-
     //Remove ampersands because SSML can't parse it 
+    return responseString.replace(/&/g, "and")
+}
+
+function speakArticle(article){
+    var articleDate = moment(article["date"]).format("dddd, MMMM Do YYYY, h:mm:ss a");
+    var responseString = article["title"] + " published at " + articleDate;
     return responseString.replace(/&/g, "and")
 }
  
 
-
-var HowTo = function () {
+var HowTo = function() {
     AlexaSkill.call(this, APP_ID);
 };
 
@@ -393,17 +395,47 @@ HowTo.prototype.intentHandlers = {
             }
             console.log(eventsWithinTheRange.length);
             console.log(eventsWithinTheRange);
-
             var responseString = "";
             for(var p = 0; p < eventsWithinTheRange.length; p++){
                 responseString = responseString + speakStudentEvent(eventsWithinTheRange[p]) + " . ";
             }
-
             response.tell(responseString);
             callback();
-
         }
+        ])
+     },
 
+     "GetArticlesIntent" : function(intent, session, response){
+        var vanderbiltArticlesArray;
+        var numberOfArticles = 3;  
+        if(intent.slots.Number){
+            numberOfArticles = Number.parseInt(intent.slots.Number.value)
+        }
+        async.series([
+        function(callback){
+            var awsFilename = '' + "vanderbilt-news" + '.js';
+            s3.getObject(
+            { Bucket: "vanderbilt-news", Key: awsFilename },
+              function (error, data) {
+                if (error != null) {
+                  console.log("Failed to retrieve an object: " + error);
+                } else {
+                  console.log("Loaded " + data.ContentLength + " bytes");
+                  vanderbiltArticlesArray = JSON.parse(data.Body.toString());
+                  callback();
+                }
+              }
+            );
+        },
+        function(callback){
+            var responseString = "";
+            //Default is 3 articles
+            for(var i = 0; i < numberOfArticles; i++){
+                responseString =  responseString + speakArticle(vanderbiltArticlesArray[i]) + " . ";
+            }
+
+            response.tell(responseString);
+        }
         ])
      },
 

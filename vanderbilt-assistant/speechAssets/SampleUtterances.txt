@@ -4,21 +4,16 @@ GetHoursIntent when is {Restaurant} open
 GetHoursIntent when is {Restaurant} open {Date}
 GetHoursIntent is {Restaurant} open
 GetHoursIntent is {Restaurant} open {Date}
-
 GetHoursIntent is {Restaurant} closed
 GetHoursIntent is {Restaurant} closed {Date}
-
 GetHoursIntent when does {Restaurant} open
 GetHoursIntent when does {Restaurant} close
 GetHoursIntent when does {Restaurant} open {Date}
 GetHoursIntent when does {Restaurant} close {Date}
-
 GetHoursIntent can I go to {Restaurant} {Date}
-GetHoursIntent can I go to {Restaurant} 
-
+GetHoursIntent can I go to {Restaurant}
 GetHoursIntent can we go to {Restaurant}
 GetHoursIntent can we go to {Restaurant} {Date}
-
 GetHoursIntent when does {Restaurant} open {Date}
 GetHoursIntent when does {Restaurant} open on {Date}
 GetHoursIntent when does {Restaurant} close {Date}
@@ -27,22 +22,26 @@ GetHoursIntent what time does {Restaurant} open {Date}
 GetHoursIntent when time does {Restaurant} open on {Date}
 GetHoursIntent what time does {Restaurant} close {Date}
 GetHoursIntent when time does {Restaurant} close on {Date}
-
 GetTimesOfGamesIntent what are the {Sport} games in the next {Duration}
 GetTimesOfGamesIntent when is the next {Sport} game
 GetTimesOfGamesIntent when is the next {Sport} match
 GetTimesOfGamesIntent when is the next {Sport} contest
 GetTimesOfGamesIntent when is the next {Sport} meet
-GetTimesOfGamesIntent when does {Sport} play 
+GetTimesOfGamesIntent when does {Sport} play
 GetTimesOfGamesIntent when does {Sport} play next
-
-
-GetResultsOfGamesIntent	what are the results of {Sport} in the last {Duration}
-GetResultsOfGamesIntent	what is the last result of {Sport}
-GetResultsOfGamesIntent	what was the last result of {Sport}
-GetResultsOfGamesIntent	what was the score of the last {Sport} game
+GetResultsOfGamesIntent what are the results of {Sport} in the last {Duration}
+GetResultsOfGamesIntent what is the last result of {Sport}
+GetResultsOfGamesIntent what was the last result of {Sport}
+GetResultsOfGamesIntent what was the score of the last {Sport} game
 GetResultsOfGamesIntent how is the {Sport} team doing
-GetResultsOfGamesIntent how is {Sport} team doing 
+GetResultsOfGamesIntent how is {Sport} team doing
 GetResultsOfGamesIntent how {Sport} is doing
 
 GetFoodSpecialsIntent what are the specials today
+GetFoodSpecialsIntent what are the specials today at chef james
+
+GetEventsIntent what are the events today
+GetEventsIntent what are the events in the next {Duration} in the category {Category}
+
+GetArticlesIntent what is the news today
+GetArticlesIntent tell me {Number} news articles
