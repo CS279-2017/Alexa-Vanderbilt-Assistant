@@ -407,8 +407,9 @@ HowTo.prototype.intentHandlers = {
 
      "GetArticlesIntent" : function(intent, session, response){
         var vanderbiltArticlesArray;
-        var numberOfArticles = 3;  
-        if(intent.slots.Number){
+        var numberOfArticles = 1;  
+        if(intent.slots.Number.value){
+            console.log("There was a number given.");
             numberOfArticles = Number.parseInt(intent.slots.Number.value)
         }
         async.series([
@@ -429,7 +430,7 @@ HowTo.prototype.intentHandlers = {
         },
         function(callback){
             var responseString = "";
-            //Default is 3 articles
+            //Default is one article
             for(var i = 0; i < numberOfArticles; i++){
                 responseString =  responseString + speakArticle(vanderbiltArticlesArray[i]) + " . ";
             }
