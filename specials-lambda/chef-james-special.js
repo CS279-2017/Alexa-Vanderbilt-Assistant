@@ -1,1 +1,1 @@
-["Entrees:","Shepherd's Pie","Rainbow Trout w/ Lemon Thyme Brown Butter","Sides:","Green Bean Casserole","Roasted Carrots w/ Fennel","Roasted Red Potatoes","Steamed Cauliflower","White Rice"]
+["Entrees:","Mediterranean Salmon","Sundried Tomato & Feta Chicken","Quinoa w/ Artichoke & Garbanzo Beans","Sides:","Grilled Zucchini","Herbed Safron Orzo","Steamed Vegetable Medley","Wild Rice"]

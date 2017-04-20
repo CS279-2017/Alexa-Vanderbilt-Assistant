@@ -11,7 +11,7 @@ var path = require('path');
 
 
 
-var phantomJS= require('phantomjs');
+var phantomJS = require('phantomjs');
 var htmlstring;
 var horseman = new Horseman({phantomPath: phantomJS.path})
 AWS.config.loadFromPath('./config.json');
