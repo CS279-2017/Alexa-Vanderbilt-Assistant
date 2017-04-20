@@ -72,7 +72,7 @@ function foodResponse(special){
         responseString = responseString + special[i]+ " , ";
     }
     responseString = responseString + ".";
-    return responseString;
+    return responseString.replace(/&/g, "and");
 }
 
 function checkCategory(event, categoryGiven){
@@ -319,7 +319,7 @@ HowTo.prototype.intentHandlers = {
     },
 
     "GetFoodSpecialsIntent": function (intent, session, response){
-        var awsFilename = '' + "chef-james-special" + '.js';
+        var awsFilename = '' + "chef-james-special-lunch" + '';
         var special;
         s3.getObject(
         { Bucket: "vanderbilt-specials", Key: awsFilename },

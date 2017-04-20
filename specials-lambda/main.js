@@ -18,6 +18,11 @@ AWS.config.loadFromPath('./config.json');
 var uploadParams = {Bucket: "vanderbilt-specials", Key: '', Body: ''};
 // Create S3 service object
 var s3 = new AWS.S3({apiVersion: '2006-03-01'});
+
+var chefJamesMeal = [];
+var lunchPaperMeal = [];
+var piAndLeafMeal = [];
+var pubMeal = [];
 async.series([
     function(callback){ 
     console.log("Starting first function");
@@ -42,47 +47,106 @@ async.series([
             var blocksArray = menu_blocks['children'];   
             //First child 
             //console.log(blocksArray[0]['children'][0]['children'][0]['data']);
-            //Get Chef James
-            var meal = [];
+            chefJamesMeal = [];
+            lunchPaperMeal = [];
+            piAndLeafMeal = [];
+            pubMeal = [];
             for(var i = 0; i < blocksArray.length; i++){
-                //console.log(blocksArray[i]['children'][0]['children'][0]['data']);
+                console.log(blocksArray[i]['children'][0]['children'][0]['data']);
                 if(blocksArray[i]['children'][0]['children'][0]['data'] == 'Chef James Bistro'){
                     var informationArray = blocksArray[i]['children'][1]['children'][0]['children'];
-                    for(var i = 0; i < informationArray.length; i++){
-                        var info = informationArray[i]['children'][0]['data'];
-                        meal.push(info);
+                    for(var j = 0; j < informationArray.length; j++){
+                        var info = informationArray[j]['children'][0]['data'];
+                        chefJamesMeal.push(info);
                     }    
                 }
+                if(blocksArray[i]['children'][0]['children'][0]['data'] == 'Lunch Paper'){
+                    var informationArray = blocksArray[i]['children'][1]['children'][0]['children'];
+                    console.log(informationArray.length);                  
+                    for(var k = 0; k < informationArray.length; k++){
+                        var info = informationArray[k]['children'][0]['data'];
+                        lunchPaperMeal.push(info);
+                    } 
+                }  
+                if(blocksArray[i]['children'][0]['children'][0]['data'] == 'Pi & Leaf'){
+                    var informationArray = blocksArray[i];
+
+                    if(informationArray['children'][1]['next']['children']){
+                        //Mushroom
+                        console.log(informationArray['children'][1]['next']['children'][3]['children'][0]['data']);    
+                        var special1 = informationArray['children'][1]['next']['children'][3]['children'][0]['data'];
+                        //Buffalo
+                        console.log(informationArray['children'][1]['next']['children'][5]['children'][0]['data']); 
+                        var special2 = informationArray['children'][1]['next']['children'][5]['children'][0]['data']     
+                        piAndLeafMeal.push(special1);
+                        piAndLeafMeal.push(special2);  
+                    }     
+                } 
+                if(blocksArray[i]['children'][0]['children'][0]['data'] == 'The Pub'){
+                   var informationArray = blocksArray[i]['children'][2]['children'][1]['children'];
+                   for(var h = 0; h < informationArray.length; h++){
+                       console.log(informationArray[h]['children'][0]['data'])
+                       pubMeal.push(informationArray[h]['children'][0]['data'])
+                   }
+                }       
             }
-            console.log(meal);
-            //Write to file
-            fs.writeFile('./chef-james-special.js',
-            JSON.stringify(meal),
-            function (err) {
-                if (err) {
-                    console.error('Writing to file failed.');
-                }
-            }
-            );
+            console.log(chefJamesMeal);
+            console.log(lunchPaperMeal);
+            console.log(piAndLeafMeal);
+            console.log(pubMeal);
         })
     	callback();
     },
     function(callback){
-        var file = "chef-james-special.js"
-        var fileStream = fs.createReadStream(file);
-        fileStream.on('error', function(err) {
-          console.log('File Error', err);
-        });
-        uploadParams.Body = fileStream;
-        uploadParams.Key = path.basename(file);
 
-        s3.upload (uploadParams, function (err, data) {
-          if (err) {
-            console.log("Error", err);
-          } if (data) {
-            console.log("Upload Success", data.Location);
-          }
-        });
+        async.series([
+
+        function(callback){
+            var params = {Bucket: 'vanderbilt-specials', Key: 'chef-james-special-lunch', Body: JSON.stringify(chefJamesMeal)};
+            s3.upload(params, function(err, data) {
+                if (err) {
+                    console.log("Error", err);
+                } if (data) {
+                    console.log("Upload Success", data.Location);
+                }
+                callback();
+            });
+        },
+        function(callback){
+            var params = {Bucket: 'vanderbilt-specials', Key: 'lunch-paper-special-lunch', Body: JSON.stringify(lunchPaperMeal)};
+            s3.upload(params, function(err, data) {
+                if (err) {
+                    console.log("Error", err);
+                } if (data) {
+                    console.log("Upload Success", data.Location);
+                }
+                callback();
+            });
+        },
+        function(callback){
+            var params = {Bucket: 'vanderbilt-specials', Key: 'pi-and-leaf-special-lunch', Body: JSON.stringify(piAndLeafMeal)};
+            s3.upload(params, function(err, data) {
+                if (err) {
+                    console.log("Error", err);
+                } if (data) {
+                    console.log("Upload Success", data.Location);
+                }
+                callback();
+            });
+
+        },
+        function(callback){
+            var params = {Bucket: 'vanderbilt-specials', Key: 'the-pub-special-lunch', Body: JSON.stringify(pubMeal)};
+            s3.upload(params, function(err, data) {
+                if (err) {
+                    console.log("Error", err);
+                } if (data) {
+                    console.log("Upload Success", data.Location);
+                }
+                callback();
+            });
+        }
+        ]);
         callback();
     }
 ], function (err, results) {
