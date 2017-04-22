@@ -1,7 +1,5 @@
 
 var request = require('request'); // for fetching the feed
-var cheerio = require('cheerio');
-var moment = require('moment');
 var fs = require('fs');
 var path = require('path');
 
@@ -32,7 +30,6 @@ function uploadToS3(file){
           console.log("Upload Success", data.Location);
         }
   });
-
 }
 
 var listOfArticles = [];

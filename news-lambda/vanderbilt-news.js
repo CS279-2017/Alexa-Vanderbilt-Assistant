@@ -1,102 +1,102 @@
 [
     {
-        "title": "Design Day features bulletproof vest that calls for backup when officers can’t",
-        "summary": "The event features 70 projects and gives teams of young engineers practice explaining their complicated work to a broad audience.",
-        "date": "2017-04-17T18:58:02.000Z"
+        "title": "April issue of Faculty Senate’s ‘Engage’ newsletter now available",
+        "summary": "The April 2017 issue of Engage, the newsletter of Vanderbilt University's Faculty Senate, is now available.",
+        "date": "2017-04-21T20:18:38.000Z"
     },
     {
-        "title": "Alumni Association honors Robert Fry for educational contributions",
-        "summary": "Robert Fry, senior lecturer in music history and literature, is the recipient of the 2017 Vanderbilt Alumni Education Award.",
-        "date": "2017-04-17T14:13:05.000Z"
+        "title": "Reminder: Learn about SkyVU updates in blog posts",
+        "summary": "Check out the latest SkyVU blog on its website. Posts capture updates regarding business processes and SkyVU programs, along with upcoming events and important dates.",
+        "date": "2017-04-21T19:55:54.000Z"
     },
     {
-        "title": "In emergencies, insurance matters",
-        "summary": "Medicaid expansion under the Affordable Care Act provides patients with a greater choice of hospital facilities, Vanderbilt researchers have found.",
-        "date": "2017-04-17T13:00:48.000Z"
+        "title": "Vanderbilt Employee Appreciation Picnic set for May 16",
+        "summary": "The annual Vanderbilt Employee Appreciation Picnic is Tuesday, May 16.",
+        "date": "2017-04-21T19:47:10.000Z"
     },
     {
-        "title": "Bowlers finish third at NCAA Championship",
-        "summary": "Vanderbilt dropped back-to-back games to Nebraska to finish in third place at the NCAA Bowling Championship in Baton Rouge, Louisiana, on Saturday.",
-        "date": "2017-04-16T23:39:28.000Z"
+        "title": "Philip Dikeman, associate professor of flute, has died",
+        "summary": "Philip Dikeman, associate professor of flute at the Blair School of Music and acting principal flute of the Nashville Symphony Orchestra, died at home from cancer April 20.",
+        "date": "2017-04-21T19:21:59.000Z"
     },
     {
-        "title": "SECURITY NOTICE: Car jacking off campus",
-        "summary": "On Saturday, April 15, shortly after 2 a.m., the Vanderbilt University Police Department was notified of a carjacking that occurred on Villa Place near 15th Avenue South.",
-        "date": "2017-04-15T14:29:37.000Z"
+        "title": "VUToday: Man-eating lions in weekly roundup of VU news stories",
+        "summary": "Vanderbilt news stories for the week of April 17 include research on the teeth of Kenyan man-eating lions and new findings about sodium's impact on thirst and diet.",
+        "date": "2017-04-21T18:56:29.000Z"
     },
     {
-        "title": "Vanderbilt Recreation and Wellness Center pool temporarily closed for repairs",
-        "summary": "The natatorium at the Vanderbilt Recreation and Wellness Center will remain closed longer than expected due to a substantial repair project to the pool.",
-        "date": "2017-04-15T14:07:30.000Z"
+        "title": "Evans, Rothschild to assume leadership posts with Board of Trust in July",
+        "summary": "The Vanderbilt Board of Trust will get a new chairman and vice chairman on July 1.",
+        "date": "2017-04-21T17:05:11.000Z"
     },
     {
-        "title": "VUToday: ‘Hamilton’ and the Federalist Papers in weekly roundup of VU news stories",
-        "summary": "Vanderbilt news stories for the week of April 10 include how the musical 'Hamilton' has affected a popular course, as well as a 'Wall Street Journal' article noting Vanderbilt's salary equity among male and female full professors.",
-        "date": "2017-04-14T20:41:52.000Z"
+        "title": "Ingram family honors father with $20 million gift to Vanderbilt’s College Halls",
+        "summary": "Three Ingram family members are making gifts totaling $20 million to name Vanderbilt University’s newest College Hall in honor of their late father and former Board of Trust member, E. Bronson Ingram.",
+        "date": "2017-04-21T13:30:49.000Z"
     },
     {
-        "title": "My Southern Health: One family’s story—the price of distracted driving",
-        "summary": "April is Distracted Driving Awareness Month. Read one family's story about how distracted driving impacted them.",
-        "date": "2017-04-14T16:55:28.000Z"
+        "title": "Wisecaver named Vanderbilt ‘Postdoc of the Year’",
+        "summary": "Accomplished postdocs and faculty \"Mentor of the Year\" honored at annual Vanderbilt Postdoctoral Association and Shared Resources Symposium April 19.",
+        "date": "2017-04-21T13:22:27.000Z"
     },
     {
-        "title": "Second annual Vanderbilt Giving Day set for June 15",
-        "summary": "With a goal of 5,000 donors in a single day, Giving Day 2017 offers the entire Vanderbilt community an opportunity to show their gold with gifts of any size to support the university areas that mean the most to them.",
-        "date": "2017-04-14T15:17:15.000Z"
+        "title": "Smith to attend national higher ed leadership development programs",
+        "summary": "Tina L. Smith, Vanderbilt assistant vice chancellor and Chancellor’s Higher Education Fellow, will participate in two national leadership development programs this summer.",
+        "date": "2017-04-20T21:37:24.000Z"
     },
     {
-        "title": "New method for tapping vast plant pharmacopeia to make more effective drugs",
-        "summary": "Geneticists have developed an effective new method for identifying the genes that produce the chemicals plants use to protect themselves from predators, which are an important natural drug source.",
-        "date": "2017-04-14T14:32:28.000Z"
+        "title": "Vanderbilt Program for Music, Mind & Society to host free event May 3",
+        "summary": "The Program for Music, Mind &#38; Society (MMS) at Vanderbilt will present research and perform music at its upcoming 'Scientific Salon: A Soiree of Science and Song' on May 3.",
+        "date": "2017-04-20T21:19:45.000Z"
     },
     {
-        "title": "A new mode of DNA repair",
-        "summary": "Structural details of a protein that removes DNA lesions shed light on fundamental mechanisms of DNA repair.",
-        "date": "2017-04-14T13:00:35.000Z"
+        "title": "VICC Annual Scientific Retreat slated for May 4",
+        "summary": "Leading cancer investigators from several prominent universities and laboratories will headline the 2017 Vanderbilt-Ingram Cancer Center (VICC) Annual Scientific Retreat May 4.",
+        "date": "2017-04-20T20:45:21.000Z"
     },
     {
-        "title": "Vanderbilt University School of Medicine moves to eighth in NIH research funding",
-        "summary": "Vanderbilt University School of Medicine (VUSM) now ranks No. 8 in the nation among U.S. medical schools in total grant support provided through the National Institutes of Health (NIH). The new ranking raises VUSM’s standing two spots from the No. 10 position it held last year.",
-        "date": "2017-04-13T16:37:41.000Z"
+        "title": "Learn more about estate planning from Fidelity Investments",
+        "summary": "The VRWC presents 'Estate Planning &#38; More' as part of its Life Phase Series on May 4.",
+        "date": "2017-04-20T20:41:21.000Z"
     },
     {
-        "title": "Sessions for next week’s ‘Celebrate’ filling up rapidly",
-        "summary": "Those attending Vanderbilt University Medical Center’s (VUMC) one-hour programs next week to celebrate staff and faculty — Celebrate the Difference YOU Make Every Day! — will be entered for drawings to win concert and athletic event tickets in addition to hearing inspiring messages from VUMC leadership and patients.",
-        "date": "2017-04-13T15:47:33.000Z"
+        "title": "Copyright system needs to be replaced: Vanderbilt professor",
+        "summary": "The whole system governing copyrights should be revamped, says Vanderbilt law professor Daniel Gervais",
+        "date": "2017-04-20T20:12:16.000Z"
     },
     {
-        "title": "Pathologist Rauch relishes opportunities to help",
-        "summary": "Pathologist Carol Rauch, M.D., Ph.D., likes being prepared.",
-        "date": "2017-04-13T15:43:22.000Z"
+        "title": "Students recognized for eye-catching data visualizations",
+        "summary": "Blake Quigley and Ben Shapiro received first-place awards in a student visualization competition that was held in conjunction with the \"Places and Spaces: Mapping Science\" exhibition on campus.",
+        "date": "2017-04-20T17:10:51.000Z"
     },
     {
-        "title": "Trial to test implantable device to ease gastroesophageal reflux",
-        "summary": "For more than a dozen years Buz Harrison, a Nashville-based media producer, has been plagued by gastroesophageal reflux disease (GERD).",
-        "date": "2017-04-13T15:36:21.000Z"
+        "title": "MEDIA ADVISORY: Next Steps graduation is April 26",
+        "summary": "Five graduating students will be recognized at the Faye and Joe Wyatt Center for Education.",
+        "date": "2017-04-20T16:31:09.000Z"
     },
     {
-        "title": "Dance Marathon",
-        "summary": "Dance Marathon, Vanderbilt’s largest student-led philanthropic organization, raised a record $282,332 to benefit Monroe Carell Jr. Children’s Hospital at Vanderbilt during its recent annual event.",
-        "date": "2017-04-13T15:30:00.000Z"
+        "title": "Vanderbilt’s W. Kimryn Rathmell named to ASCI leadership post",
+        "summary": "W. Kimryn Rathmell, director of the Division of Hematology/Oncology at Vanderbilt University Medical Center, has been named vice president of The American Society for Clinical Investigation.",
+        "date": "2017-04-20T16:04:13.000Z"
     },
     {
-        "title": "Teukolsky awarded NEH funding for Victorian ‘new media’ research",
-        "summary": "Rachel Teukolsky, an English professor whose research bridges Victorian literature and the visual arts, has received a Summer Stipends award from the National Endowment for the Humanities.",
-        "date": "2017-04-13T15:24:12.000Z"
+        "title": "Campus learns about land use plan at FutureVU Expo",
+        "summary": "More than 800 students, staff, faculty and others stopped by the Wond’ry April 19 to learn about FutureVU, Vanderbilt’s campus land use planning initiative, and how the university’s built environment might change over the next 20-30 years.",
+        "date": "2017-04-20T16:02:27.000Z"
     },
     {
-        "title": "Article explores nursing professionalism system",
-        "summary": "Nurses have an essential role in supporting a professional work environment, and to do so, they must build a system that promotes it. That is the message from Executive Chief Nursing Officer Marilyn Dubree, MSN, R.N., in a newly-published article in the April issue of American Nurse Today magazine.",
-        "date": "2017-04-13T15:23:28.000Z"
+        "title": "Perdikis named Department of Plastic Surgery chair",
+        "summary": "Galen Perdikis, M.D., professor and chair of the Division of Plastic Surgery at the Mayo Clinic in Jacksonville, Florida, has been named professor and chair of Vanderbilt’s Department of Plastic Surgery. His appointment is effective Aug. 1.",
+        "date": "2017-04-20T13:41:02.000Z"
     },
     {
-        "title": "Anesthesiology creates perioperative medicine fellowship",
-        "summary": "The department of Anesthesiology has created a new training program, the Fellowship in Perioperative Medicine, set to launch in July. The multidisciplinary 12-month program has slots for up to four fellows, and is open to physicians who’ve completed residency in either Anesthesiology or General Surgery.",
-        "date": "2017-04-13T15:19:17.000Z"
+        "title": "Program sets stage for unconscious bias training",
+        "summary": "Vanderbilt University Medical Center (VUMC), in conjunction with the consulting firm Cook Ross Inc., held a four-day Unconscious Bias Train-the-Trainer Program at Scarritt Bennett Center last week.",
+        "date": "2017-04-20T13:40:00.000Z"
     },
     {
-        "title": "Neurotransmitter expert Gouaux set for next Discovery Lecture",
-        "summary": "Molecular “mapmaker” Eric Gouaux, Ph.D., senior scientist at the Vollum Institute of Oregon Health &#38; Science University (OHSU) in Portland, Oregon, will deliver the next Flexner Discovery Lecture on Thursday, April 20.",
-        "date": "2017-04-13T15:15:26.000Z"
+        "title": "New Emergency Operations Center enhances readiness",
+        "summary": "Vanderbilt University Medical Center’s (VUMC) new 1,200-square-foot Emergency Operations Center (EOC) has large LED monitors lining freshly painted walls and a slew of telephones.",
+        "date": "2017-04-20T13:39:19.000Z"
     }
 ]
