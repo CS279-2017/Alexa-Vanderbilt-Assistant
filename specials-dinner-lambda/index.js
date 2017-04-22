@@ -12,6 +12,7 @@ var uploadParams = {Bucket: "vanderbilt-specials", Key: '', Body: ''};
 // Create S3 service object
 var s3 = new AWS.S3({apiVersion: '2006-03-01'});
 var chefJamesMeal = [];
+var piAndLeafMeal = [];
 exports.handler = (event, context, callback) => {
     exec('-v', (error, stdout, stderr) => {
         if (error) {
@@ -69,8 +70,25 @@ exports.handler = (event, context, callback) => {
 		                           }
 		                       }
 		                   }
+		                } 
+
+
+		                if(blocksArray[i]['children'][0]['children'][0]['data'] == 'Pi & Leaf'){
+		                    var informationArray = blocksArray[i];
+
+		                    if(informationArray['children'][1]['next']['children']){
+		                        //Mushroom
+		                        console.log(informationArray['children'][1]['next']['children'][3]['children'][0]['data']);    
+		                        var special1 = informationArray['children'][1]['next']['children'][3]['children'][0]['data'];
+		                        //Buffalo
+		                        console.log(informationArray['children'][1]['next']['children'][5]['children'][0]['data']); 
+		                        var special2 = informationArray['children'][1]['next']['children'][5]['children'][0]['data']     
+		                        piAndLeafMeal.push(special1);
+		                        piAndLeafMeal.push(special2);  
+		                    }     
 		                }       
 		            }
+		            console.log(piAndLeafMeal);
 		            console.log(chefJamesMeal);
 		        })
 		    	callback();
@@ -82,9 +100,21 @@ exports.handler = (event, context, callback) => {
 		                    console.log("Error", err);
 		                } if (data) {
 		                    console.log("Upload Success", data.Location);
+		                    callback();
 		                }
-		                callback();
 		            });
+		    },
+		    function(callback){
+		    		var params = {Bucket: 'vanderbilt-specials', Key: 'pi-and-leaf-special-dinner', Body: JSON.stringify(piAndLeafMeal)};
+		            s3.upload(params, function(err, data) {
+		                if (err) {
+		                    console.log("Error", err);
+		                } if (data) {
+		                    console.log("Upload Success", data.Location);
+		                    callback();
+		                }
+		            });
+
 		    }
 		], function (err, results) {
 		    console.log("Menu scraped and processing finished.");
