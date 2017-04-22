@@ -37,8 +37,10 @@ GetResultsOfGamesIntent how is the {Sport} team doing
 GetResultsOfGamesIntent how is {Sport} team doing
 GetResultsOfGamesIntent how {Sport} is doing
 
-GetFoodSpecialsIntent what are the specials today
-GetFoodSpecialsIntent what are the specials today at chef james
+
+GetFoodSpecialsIntent what are the {Meal} specials at {Restaurant}
+GetFoodSpecialsIntent what are the specials at {Restaurant}
+
 
 GetEventsIntent what are the events today
 GetEventsIntent what are the events in the next {Duration} in the category {Category}

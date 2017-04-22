@@ -319,10 +319,41 @@ HowTo.prototype.intentHandlers = {
     },
 
     "GetFoodSpecialsIntent": function (intent, session, response){
-        var awsFilename = '' + "chef-james-special-lunch" + '';
+        //Default value
+        var awsKey = '' + "chef-james-special-lunch" + '';
+        console.log(intent.slots);
+        //Restaurant
+        var restaurantName = "";
+        var restaurantSlot = intent.slots.Restaurant;
+        if(restaurantSlot.value){
+          restaurantName = restaurantSlot.value;
+          restaurantName = restaurantName.toLowerCase();
+          restaurantName = restaurantName.replace(/\s+/g, '-');
+        } else {
+          //Check for error case(no restaurant given)
+          response.tell("Invalid Response. Please provide a restaurant.");
+        }
+
+        //Meal Type
+        var mealType = "";
+        var mealTypeSlot = intent.slots.Meal;
+        if(mealTypeSlot.value){
+          mealType = mealTypeSlot.value;
+          mealType = mealType.toLowerCase();
+          mealType = mealType.replace(/\s+/g, '-');
+        } else {
+          //If no meal is provided then default to lunch 
+          mealType = "lunch";
+        }
+        //Change the request into the correct format
+        console.log("Restaurant Name: " + restaurantName);
+        console.log("Meal Type: " + mealType);
+
+        awsKey = restaurantName + "-special-" + mealType;
+        console.log(awsKey);
         var special;
         s3.getObject(
-        { Bucket: "vanderbilt-specials", Key: awsFilename },
+        { Bucket: "vanderbilt-specials", Key: awsKey },
           function (error, data) {
             if (error != null) {
               console.log("Failed to retrieve an object: " + error);
