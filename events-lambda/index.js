@@ -51,13 +51,10 @@ exports.handler = (event, context, callback) => {
 	      var dateClass = itemDescription(".dtstart")['0']['children'][0]['attribs'];
 	      //console.log(dateClass);
 	      //Check if time is valid
-	      
-
 	      if(itemDescription(".dtstart")['0']['children'] &&  itemDescription(".dtstart")['0']['children'][2]){
 	          //console.log(itemDescription(".dtstart")['0']['children'][2]['attribs']['title']);
 	          itemJSON['time'] = itemDescription(".dtstart")['0']['children'][2]['attribs']['title'];
 	      }
-
 	      //Check if date is valid
 	      if(dateClass){
 	        itemJSON['date'] =  dateClass['title'];
@@ -65,14 +62,11 @@ exports.handler = (event, context, callback) => {
 	      itemJSON['text'] = item['description']
 	      itemJSON['title'] = item['title'];
 	      itemJSON['summary'] = item['summary'];
-	      itemJSON['categories'] = item['categories'];
-
-	      
-	      
+	      itemJSON['categories'] = item['categories'];  
 	      itemJSON['location'] = itemDescription(".location")['0']['children'][0]['data'];
-	      var description = createTextVersion(itemDescription(".description"))
-
 	      
+
+	      var description = createTextVersion(itemDescription(".description"))
 	      //CLEAN UP STRINGS
 	      description = description.replace(/&quot/g, "\"");
 	      description = description.replace(/&apos/g, "'");
@@ -81,8 +75,6 @@ exports.handler = (event, context, callback) => {
 	      description = description.replace(/\nA/g, " ");
 	      description = description.replace(/&#xA0/g, " ");
 	      itemJSON['description'] = description;
-	      
-	      
 	      listOfItems.push(itemJSON); 
 
 	    }

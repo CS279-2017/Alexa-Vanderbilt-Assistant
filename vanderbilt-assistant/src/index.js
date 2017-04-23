@@ -104,6 +104,24 @@ function speakArticle(article){
     var responseString = article["title"] + " published at " + articleDate;
     return responseString.replace(/&/g, "and")
 }
+
+function removeDuplicates(originalArray, objKey) {
+  var trimmedArray = [];
+  var values = [];
+  var value;
+
+  for(var i = 0; i < originalArray.length; i++) {
+    value = originalArray[i][objKey];
+
+    if(values.indexOf(value) === -1) {
+      trimmedArray.push(originalArray[i]);
+      values.push(value);
+    }
+  }
+
+  return trimmedArray;
+
+}
  
 
 var HowTo = function() {
@@ -178,27 +196,27 @@ HowTo.prototype.intentHandlers = {
         async.series([ 
 
         function(callback){
-        var sportSlot = intent.slots.Sport;
-        var sportValue = sportSlot.value;
-        //Removes punctuation and set to lowercase
-        sportValue = sportValue.replace(/'/,'');
-        sportValue = sportValue.toLowerCase();
-        
-        //Need to download file from S3
-        var awsFilename = '' + sportValue + '.js';
+            var sportSlot = intent.slots.Sport;
+            var sportValue = sportSlot.value;
+            //Removes punctuation and set to lowercase
+            sportValue = sportValue.replace(/'/,'');
+            sportValue = sportValue.toLowerCase();
+            
+            //Need to download file from S3
+            var awsFilename = '' + sportValue + '.js';
 
-        s3.getObject(
-        { Bucket: "vanderbilt-sports-schedules", Key: awsFilename },
-          function (error, data) {
-            if (error != null) {
-              console.log("Failed to retrieve an object: " + error);
-            } else {
-              console.log("Loaded " + data.ContentLength + " bytes");
-              schedule = JSON.parse(data.Body.toString());
-              callback();
-            }
-          }
-        );
+            s3.getObject(
+            { Bucket: "vanderbilt-sports-schedules", Key: awsFilename },
+              function (error, data) {
+                if (error != null) {
+                  console.log("Failed to retrieve an object: " + error);
+                } else {
+                  console.log("Loaded " + data.ContentLength + " bytes");
+                  schedule = JSON.parse(data.Body.toString());
+                  callback();
+                }
+              }
+            );
         },
 
         function(callback){   
@@ -334,6 +352,16 @@ HowTo.prototype.intentHandlers = {
           response.tell("Invalid Response. Please provide a restaurant.");
         }
 
+        //If the restaurant has no special
+
+        var hasASpecial = restaurantName.includes("pub") || 
+                          restaurantName.includes("pi")  ||
+                          restaurantName.includes("chef")||
+                          restaurantName.includes("paper");
+        if(!hasASpecial){
+           response.tell("The provided restaurant does not have a special.");
+        }
+
         //Meal Type
         var mealType = "";
         var mealTypeSlot = intent.slots.Meal;
@@ -349,6 +377,21 @@ HowTo.prototype.intentHandlers = {
         console.log("Restaurant Name: " + restaurantName);
         console.log("Meal Type: " + mealType);
 
+        //If pub and dinner
+        if(restaurantName == "the-pub" || restaurantName == "pub"){
+           mealType = "lunch";
+        }
+
+        //If lunch paper and dinner
+        if(restaurantName == "lunch-paper" && mealType == "dinner"){
+            response.tell("There is no lunch paper dinner special");
+        }
+
+        //If pi and leaf, do dinner
+        if(restaurantName == "pi-and-leaf"){
+           mealType = "dinner";
+        }
+
         awsKey = restaurantName + "-special-" + mealType;
         console.log(awsKey);
         var special;
@@ -360,8 +403,14 @@ HowTo.prototype.intentHandlers = {
             } else {
               console.log("Loaded " + data.ContentLength + " bytes");
               special = JSON.parse(data.Body.toString());
-              var responseString = foodResponse(special);
-              response.tell(responseString);  
+
+              if (special === undefined || special.length == 0) {
+                response.tell("There is no special today");
+              } else {
+                var responseString = foodResponse(special);
+                console.log(special);
+                response.tell(responseString);  
+              }
             }
           }
         );
@@ -402,6 +451,9 @@ HowTo.prototype.intentHandlers = {
             var currentDate = moment(currentTime).tz("America/Chicago");
             var currentDateAfterRange = moment(currentDate + moment.duration(durationValue));
             var eventsWithinTheRange = [];
+
+            console.log("Vanderbilt Events Array:")
+            console.log(vanderbiltEventsArray);
             //Loop through the event 
             for(var i = 0; i < vanderbiltEventsArray.length; i++){
                 //Check if the event has a date property
@@ -414,21 +466,36 @@ HowTo.prototype.intentHandlers = {
 
                     var isCategoryValid = checkCategory(vanderbiltEventsArray[i],categoryValue);
                     //If there is no category value and it is in range, push it on
+                    
                     if(categoryValue == "none" && inRange){
+                        console.log("Event Pushed");
                         eventsWithinTheRange.push(vanderbiltEventsArray[i]);
                     }
                     //If there is a category value, then it has to be the same as one 
                     // of the categories in the set, and be in range 
                     if(!(categoryValue == "none") && isCategoryValid && inRange){
+                        console.log("Event Pushed");
                         eventsWithinTheRange.push(vanderbiltEventsArray[i]);
                     }
                 }
             }
             console.log(eventsWithinTheRange.length);
             console.log(eventsWithinTheRange);
+
+            //There are duplicates in there for some reason, so we need to remove them
+            
+            var eventsNoDups = removeDuplicates(eventsWithinTheRange, 'title');
+            console.log(eventsNoDups);
+
             var responseString = "";
-            for(var p = 0; p < eventsWithinTheRange.length; p++){
-                responseString = responseString + speakStudentEvent(eventsWithinTheRange[p]) + " . ";
+            for(var p = 0; p < eventsNoDups.length; p++){
+                responseString = responseString + speakStudentEvent(eventsNoDups[p]) + " . ";
+
+                //Limits the events given out to 3, for the demo
+                //REMOVE AT SOMEPOINT
+                if(p >= 2){
+                   break;
+                }
             }
             response.tell(responseString);
             callback();
@@ -460,8 +527,10 @@ HowTo.prototype.intentHandlers = {
             );
         },
         function(callback){
+            console.log(vanderbiltArticlesArray);
             var responseString = "";
             //Default is one article
+            console.log(numberOfArticles);
             for(var i = 0; i < numberOfArticles; i++){
                 responseString =  responseString + speakArticle(vanderbiltArticlesArray[i]) + " . ";
             }
